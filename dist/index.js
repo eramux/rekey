@@ -43,11 +43,11 @@ function rename_recursive(keys, value, workingObject) {
     }
     return false;
 }
-function rename(key, value, object) {
+function rekey(key, value, object) {
     let keys = key.split('.');
     rename_recursive(keys, value, object);
 }
 module.exports = {
-    rename
+    rekey
 };
 //# sourceMappingURL=index.js.map
