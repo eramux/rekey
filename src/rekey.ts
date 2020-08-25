@@ -31,16 +31,13 @@ export function recursiveDelete(workingObject: RekeyObject, selector: Array<stri
 
 export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Array<string>, callback: KeyTraversalCallback) {
   let currentSelector = selectors[0]
-
   let remainingSelectors = selectors.slice(1)
+
   // Check if the recursion is in the last layer of the selector
   if (selectors.length <= 1) {
-    if (workingObject instanceof Array) {
+    if (workingObject instanceof Array && workingObject !== null) {
       workingObject = workingObject.map((item: any) => {
-        if (item == null) {
-          return item
-        }
-        if (item instanceof Object) {
+        if (item instanceof Object && item !== null) {
           recursiveKeyTraversal(item, selectors, callback)
         }
         return item
@@ -48,7 +45,7 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
       return
     }
 
-    if (workingObject instanceof Object) {
+    if (workingObject instanceof Object && workingObject !== null) {
       return callback(workingObject, currentSelector)
     }
   }
@@ -69,11 +66,7 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
   // If we encounter an array at the current selector, we need to loop through every element and apply the recursiveKeyTraversal on each elegible element
   if (currentElement instanceof Array) {
     currentElement = currentElement.map((item: any) => {
-
-      if (item == null) {
-        return item
-      }
-      if (item instanceof Object) {
+      if (item instanceof Object && item !== null) {
         recursiveKeyTraversal(item, remainingSelectors, callback)
       }
       return item
@@ -83,8 +76,5 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
 
   if (currentElement instanceof Object) {
     recursiveKeyTraversal(currentElement, remainingSelectors, callback)
-    return
   }
-
-  return
 }

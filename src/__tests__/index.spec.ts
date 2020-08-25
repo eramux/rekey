@@ -3,18 +3,20 @@ import { deleteKey, renameKey } from "../index"
 import { describe, expect, test } from '@jest/globals'
 import { recursiveKeyTraversal } from "../rekey"
 
-describe("correctly modifies keys of objects", () => {
+describe("recursive key traversal", () => {
   let testObject: any = {}
   beforeEach(() => {
     testObject = {
       test: {
         name: "test",
         age: 32,
+        failure: null,
         settings: {
           color: "#ffaabb",
           names: ["ak", "cthulu"]
         },
         rooms: [
+          null,
           {
             name: "Deluxe",
             price: 123.32
@@ -46,7 +48,17 @@ describe("correctly modifies keys of objects", () => {
   })
   it("modifies testObject array keys", () => {
     renameKey(testObject, "test.rooms.name", "room_name")
-    expect(testObject.test.rooms[0].room_name).toEqual("Deluxe")
+    expect(testObject.test.rooms[1].room_name).toEqual("Deluxe")
+  })
+  it("stops the recursion if object does not have the selector property", () => {
+    let referenceObject = Object.assign({}, testObject)
+    renameKey(testObject, "test.cthulu.name", "main")
+    expect(testObject).toEqual(referenceObject)
+  })
+  it("stops the recurstion if a selector paht element has a null value", () => {
+    let referenceObject = Object.assign({}, testObject)
+    renameKey(testObject, "test.failure.name", "street")
+    expect(testObject).toEqual(referenceObject)
   })
   it("modifies first level array elements", () => {
     let arrayTestObject: any = [
@@ -56,43 +68,6 @@ describe("correctly modifies keys of objects", () => {
     ]
     renameKey(arrayTestObject, "arraytest", "arraytest_replace")
     expect(arrayTestObject[0].arraytest_replace).toEqual("hello")
-  })
-})
-
-describe("correctly deletes keys of objects", () => {
-  let testObject: any = {}
-  beforeEach(() => {
-    testObject = {
-      test: {
-        name: "test",
-        age: 32,
-        settings: {
-          color: "#ffaabb",
-          names: ["ak", "cthulu"]
-        },
-        rooms: [
-          {
-            name: "Deluxe",
-            price: 123.32
-          },
-          {
-            name: "Economy",
-            price: 10,
-            broken: true,
-            guests: [
-              {
-                name: "John"
-              },
-              {
-                name: "Doe",
-                age: 123
-              },
-              "strage value hmmmmm..."
-            ]
-          }
-        ]
-      }
-    }
   })
   it("deltes object keys", () => {
     deleteKey(testObject, "test.name")
