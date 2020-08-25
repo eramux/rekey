@@ -1,11 +1,12 @@
-const renamejs = require('../index')
+// const renamejs = require('../index')
+import { deleteKey, renameKey } from "../index"
 import { describe, expect, test } from '@jest/globals'
 
 
-describe("correctly modifies objects", () => {
-  let object: object = {}
+describe("correctly modifies keys of objects", () => {
+  let testObject: any = {}
   beforeEach(() => {
-    object = {
+    testObject = {
       test: {
         name: "test",
         age: 32,
@@ -24,10 +25,10 @@ describe("correctly modifies objects", () => {
             broken: true,
             guests: [
               {
-                name: "Uthumbu"
+                name: "John"
               },
               {
-                name: "lububub",
+                name: "Doe",
                 age: 123
               },
               "strage value hmmmmm..."
@@ -38,25 +39,54 @@ describe("correctly modifies objects", () => {
     }
   })
   it("modifies object keys", () => {
+    renameKey(testObject, "test.name", "name_update")
+    renameKey(testObject, "test.settings.color", "color_update")
+    expect(testObject).toHaveProperty('test.name_update')
+    expect(testObject).toHaveProperty('test.settings.color_update')
+  })
+  it("modifies testObject array keys", () => {
+    renameKey(testObject, "test.rooms.name", "room_name")
+    expect(testObject.test.rooms[0].room_name).toEqual("Deluxe")
+  })
+})
 
-    // renamejs.rename("test.key.in.here", "away", object)
-    renamejs.rekey("test.name", "name_update", object)
-    renamejs.rekey("test.settings.color", "color_update", object)
-    // renamejs.rename("test.rooms.name", "room_name", object)
-
-    expect(object).toHaveProperty('test.name_update')
-    expect(object).toHaveProperty('test.settings.color_update')
-
-    // expect(object).toEqual(
-    //   {
-    //     test: {
-    //       key: {
-    //         in: {
-    //           away: "hello"
-    //         }
-    //       }
-    //     }
-    //   }
-    // )
+describe("correctly deletes keys of objects", () => {
+  let testObject: any = {}
+  beforeEach(() => {
+    testObject = {
+      test: {
+        name: "test",
+        age: 32,
+        settings: {
+          color: "#ffaabb",
+          names: ["ak", "cthulu"]
+        },
+        rooms: [
+          {
+            name: "Deluxe",
+            price: 123.32
+          },
+          {
+            name: "Economy",
+            price: 10,
+            broken: true,
+            guests: [
+              {
+                name: "John"
+              },
+              {
+                name: "Doe",
+                age: 123
+              },
+              "strage value hmmmmm..."
+            ]
+          }
+        ]
+      }
+    }
+  })
+  it("deltes object keys", () => {
+    deleteKey(testObject, "test.name")
+    expect(testObject.test).not.toHaveProperty("name")
   })
 })
