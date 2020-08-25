@@ -1,11 +1,11 @@
 {
   "name": "@eramux/rekey",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "A simple and performant library to rename object keys",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "coverage": "nyc npm run test"
   },
