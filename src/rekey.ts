@@ -31,38 +31,61 @@ export function recursiveDelete(workingObject: RekeyObject, selector: Array<stri
 
 
 
-export function recursiveKeyTraversal(workingObject: RekeyObject, selector: Array<string>, callback: KeyTraversalCallback): Boolean {
-  let currentSelector = selector[0]
-  if (selector.length > 1) {
-    if (workingObject.hasOwnProperty(currentSelector)) {
-      if (workingObject[currentSelector] == null) {
-        return false
-      } else if (workingObject[currentSelector] instanceof Array) {
-        let restSelector = selector.slice(1)
-        workingObject[currentSelector] = workingObject[currentSelector].map((item: any) => {
-          if (item == null) {
-            return item
-          } else if (item instanceof Object) {
-            recursiveKeyTraversal(item, restSelector, callback)
-          } else {
-            return item
-          }
+export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Array<string>, callback: KeyTraversalCallback): Boolean {
+  let currentSelector = selectors[0]
+
+  let remainingSelectors = selectors.slice(1)
+  // Check if the recursion is in the last layer of the selector
+  if (selectors.length <= 1) {
+    if (workingObject instanceof Array) {
+      workingObject = workingObject.map((item: any) => {
+        if (item == null) {
           return item
-        })
-      } else if (workingObject[currentSelector] instanceof Object) {
-        return recursiveKeyTraversal(workingObject[currentSelector], selector.slice(1), callback)
-      } else {
-        return false
-      }
-    } else {
-      return false
+        }
+        if (item instanceof Object) {
+          recursiveKeyTraversal(item, selectors, callback)
+        }
+        return item
+      })
+      return true
     }
-  } else {
-    if (workingObject.hasOwnProperty(currentSelector)) {
+
+    if (workingObject instanceof Object) {
       return callback(workingObject, currentSelector)
-    } else {
-      return false
     }
   }
+
+
+  if (!workingObject.hasOwnProperty(currentSelector)) {
+    return false
+  }
+
+  let currentElement = workingObject[currentSelector]
+
+  // If the current selector terminates at a null value while still not having arrived at the last selector level, we return false
+  if (currentElement === null) {
+    return false
+  }
+
+
+  // If we encounter an array at the current selector, we need to loop through every element and apply the recursiveKeyTraversal on each elegible element
+  if (currentElement instanceof Array) {
+    currentElement = currentElement.map((item: any) => {
+
+      if (item == null) {
+        return item
+      }
+      if (item instanceof Object) {
+        recursiveKeyTraversal(item, remainingSelectors, callback)
+      }
+      return item
+    })
+    return true
+  }
+
+  if (currentElement instanceof Object) {
+    return recursiveKeyTraversal(currentElement, remainingSelectors, callback)
+  }
+
   return false
 }
