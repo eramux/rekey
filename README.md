@@ -1,14 +1,21 @@
 # rekey
 This library enables you to quickly and efficiently modify object keys.
 
+
+## Installation
+
+```
+npm i @eramux/rekey
+```
+
 ## Usage
 
 ```
 
-import { rekey } from "rekey"
+import { renameKey, deleteKey } from "@eramux/rekey"
 
 # Define a sample object
-let object = {
+let data = {
   key1: "some string",
   settings: {
     name: "John",
@@ -25,16 +32,25 @@ let object = {
   ]
 }
 
+/**
+ * Using renameKey
+ */
+
 # This will result in the settings -> name key being renamed into 'username'
-rekey("settings.name", "username", object)
+renameKey(data, "settings.name", "username")
 
 # rekey will automatically rename keys in object arrays
-rekey("items.name", "material", object)
+renameKey(data, "items.name", "material")
 
 # It takes care to only change keys that exist
-rekey("items.supported", "usable", object)
+renameKey(data, "items.supported", "usable")
 
+/**
+ * Using deleteKey
+ */
 
+# This will delete the key defined by the selector
+deleteKey(data, "settings.name")
 
 ```
 

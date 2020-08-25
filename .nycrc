@@ -5,11 +5,11 @@
     ".ts"
   ],
   "include": [
-    "src/**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "**/*.d.ts",
-    "src/**/test/**/*"
+    "src/**/__test__/**/*"
   ],
   "sourceMap": true,
   "reporter": [

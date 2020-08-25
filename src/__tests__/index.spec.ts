@@ -1,7 +1,7 @@
 // const renamejs = require('../index')
 import { deleteKey, renameKey } from "../index"
 import { describe, expect, test } from '@jest/globals'
-
+import { recursiveKeyTraversal } from "../rekey"
 
 describe("correctly modifies keys of objects", () => {
   let testObject: any = {}
@@ -89,4 +89,38 @@ describe("correctly deletes keys of objects", () => {
     deleteKey(testObject, "test.name")
     expect(testObject.test).not.toHaveProperty("name")
   })
+})
+
+describe("recursive key traversal", () => {
+  it("ignores null values", () => {
+    let test = {
+      item: {
+        user: null
+      }
+    }
+
+    let result = recursiveKeyTraversal(test, ["item", "user", "username"], (object, key) => {
+      console.log(object, key)
+      return true
+    })
+
+    expect(result).toBe(false)
+
+  })
+  // it("ignores null values in arrays", () => {
+  //   let test = {
+  //     item: [null, {
+  //       user: "john"
+  //     }]
+  //   }
+
+  //   let result = recursiveKeyTraversal(test, ["item", "user"], (object, key) => {
+  //     console.log(object, key)
+  //     return true
+  //   })
+
+  //   expect(result).toBe(true)
+
+  // })
+
 })

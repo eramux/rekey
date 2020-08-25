@@ -31,7 +31,7 @@ export function recursiveDelete(workingObject: RekeyObject, selector: Array<stri
 
 
 
-function recursiveKeyTraversal(workingObject: RekeyObject, selector: Array<string>, callback: KeyTraversalCallback): Boolean {
+export function recursiveKeyTraversal(workingObject: RekeyObject, selector: Array<string>, callback: KeyTraversalCallback): Boolean {
   let currentSelector = selector[0]
   if (selector.length > 1) {
     if (workingObject.hasOwnProperty(currentSelector)) {
