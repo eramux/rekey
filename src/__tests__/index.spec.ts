@@ -63,46 +63,25 @@ describe("recursive key traversal", () => {
   it("modifies first level array elements", () => {
     let arrayTestObject: any = [
       {
-        arraytest: "hello"
+        arraytest: "hello",
+        elements: [
+          {
+            name: "cool"
+          },
+          {
+            name: "naw"
+          }
+        ]
       }
     ]
     renameKey(arrayTestObject, "arraytest", "arraytest_replace")
     expect(arrayTestObject[0].arraytest_replace).toEqual("hello")
+
+    renameKey(arrayTestObject, "elements.name", "coolio")
+    expect(arrayTestObject[0].elements[0].coolio).toEqual("cool")
   })
   it("deltes object keys", () => {
     deleteKey(testObject, "test.name")
     expect(testObject.test).not.toHaveProperty("name")
   })
-})
-
-describe("recursive key traversal", () => {
-  // it("ignores null values", () => {
-  //   let test = {
-  //     item: {
-  //       user: null
-  //     }
-  //   }
-
-  //   let result = recursiveKeyTraversal(test, ["item", "user", "username"], (object, key) => {
-  //     console.log(object, key)
-  //     return true
-  //   })
-  //   expect(result).toBe(false)
-  // })
-  // it("ignores null values in arrays", () => {
-  //   let test = {
-  //     item: [null, {
-  //       user: "john"
-  //     }]
-  //   }
-
-  //   let result = recursiveKeyTraversal(test, ["item", "user"], (object, key) => {
-  //     console.log(object, key)
-  //     return true
-  //   })
-
-  //   expect(result).toBe(true)
-
-  // })
-
 })
