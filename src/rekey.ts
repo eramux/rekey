@@ -1,4 +1,4 @@
-type KeyTraversalCallback = (workingObject: RekeyObject, currentSelector: string) => Boolean;
+type KeyTraversalCallback = (workingObject: RekeyObject, currentSelector: string) => void;
 export interface RekeyObject {
   [key: string]: any
 }
@@ -9,11 +9,10 @@ export interface RekeyObject {
  * @param selector The selector of the key that should be modified
  * @param value The value with wich the key should be modified with
  */
-export function recursiveRename(workingObject: RekeyObject, selector: Array<string>, value: string): Boolean {
-  return recursiveKeyTraversal(workingObject, selector, (object, currentSelector) => {
+export function recursiveRename(workingObject: RekeyObject, selector: Array<string>, value: string) {
+  recursiveKeyTraversal(workingObject, selector, (object, currentSelector) => {
     object[value] = object[currentSelector]
     delete object[currentSelector]
-    return true
   })
 }
 
@@ -22,16 +21,15 @@ export function recursiveRename(workingObject: RekeyObject, selector: Array<stri
  * @param workingObject
  * @param selector The selector of the key that should be deleted
  */
-export function recursiveDelete(workingObject: RekeyObject, selector: Array<string>): Boolean {
-  return recursiveKeyTraversal(workingObject, selector, (object, currentSelector) => {
+export function recursiveDelete(workingObject: RekeyObject, selector: Array<string>) {
+  recursiveKeyTraversal(workingObject, selector, (object, currentSelector) => {
     delete object[currentSelector]
-    return true
   })
 }
 
 
 
-export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Array<string>, callback: KeyTraversalCallback): Boolean {
+export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Array<string>, callback: KeyTraversalCallback) {
   let currentSelector = selectors[0]
 
   let remainingSelectors = selectors.slice(1)
@@ -47,7 +45,7 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
         }
         return item
       })
-      return true
+      return
     }
 
     if (workingObject instanceof Object) {
@@ -57,14 +55,14 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
 
 
   if (!workingObject.hasOwnProperty(currentSelector)) {
-    return false
+    return
   }
 
   let currentElement = workingObject[currentSelector]
 
   // If the current selector terminates at a null value while still not having arrived at the last selector level, we return false
   if (currentElement === null) {
-    return false
+    return
   }
 
 
@@ -80,12 +78,13 @@ export function recursiveKeyTraversal(workingObject: RekeyObject, selectors: Arr
       }
       return item
     })
-    return true
+    return
   }
 
   if (currentElement instanceof Object) {
-    return recursiveKeyTraversal(currentElement, remainingSelectors, callback)
+    recursiveKeyTraversal(currentElement, remainingSelectors, callback)
+    return
   }
 
-  return false
+  return
 }
