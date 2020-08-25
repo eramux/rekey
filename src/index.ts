@@ -42,11 +42,11 @@ function rename_recursive(keys: Array<string>, value: string, workingObject: Use
 }
 
 
-function rename(key: string, value: string, object: UserObject) {
+function rekey(key: string, value: string, object: UserObject) {
   let keys = key.split('.')
   rename_recursive(keys, value, object)
 }
 
 module.exports = {
-  rename
+  rekey
 }

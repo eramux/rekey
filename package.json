@@ -1,6 +1,6 @@
 {
-  "name": "renamejs",
-  "version": "0.0.1",
+  "name": "@eramux/rekey",
+  "version": "0.0.2",
   "description": "A simple and performant library to rename object keys",
   "main": "dist/index.js",
   "scripts": {

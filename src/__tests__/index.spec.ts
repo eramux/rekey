@@ -40,8 +40,8 @@ describe("correctly modifies objects", () => {
   it("modifies object keys", () => {
 
     // renamejs.rename("test.key.in.here", "away", object)
-    renamejs.rename("test.name", "name_update", object)
-    renamejs.rename("test.settings.color", "color_update", object)
+    renamejs.rekey("test.name", "name_update", object)
+    renamejs.rekey("test.settings.color", "color_update", object)
     // renamejs.rename("test.rooms.name", "room_name", object)
 
     expect(object).toHaveProperty('test.name_update')
