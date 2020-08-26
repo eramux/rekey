@@ -1,3 +1,0 @@
-interface Hello {
-  a: string
-}
