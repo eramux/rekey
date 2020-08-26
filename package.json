@@ -1,7 +1,7 @@
 {
   "name": "@eramux/rekey",
-  "version": "0.0.17",
-  "description": "A simple and performant library to rename object keys",
+  "version": "0.1.0",
+  "description": "A simple and performant zero dependency library that allows you to modify your object structure using references.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
