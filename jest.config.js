@@ -7,5 +7,5 @@ module.exports = {
 	moduleFileExtensions: ['ts', 'js', 'json', 'node'],
 	verbose: true,
 	collectCoverage: true,
-	coverageReporters: ["json-summary"]
+	coverageReporters: ["json-summary", "text"]
 }

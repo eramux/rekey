@@ -16,8 +16,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "build:badges": "istanbul-badges-readme",
-    "test": "jest",
-    "coverage": "nyc npm run test"
+    "test": "jest"
   },
   "keywords": [
     "rename",
