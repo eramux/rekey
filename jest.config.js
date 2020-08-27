@@ -6,5 +6,6 @@ module.exports = {
 	testMatch: ['**/__tests__/**/*.spec.[jt]s'],
 	moduleFileExtensions: ['ts', 'js', 'json', 'node'],
 	verbose: true,
-	collectCoverage: true
+	collectCoverage: true,
+	coverageReporters: ["json-summary"]
 }

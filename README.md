@@ -4,6 +4,12 @@
 <h1 align="center">Rekey</h1>
 A simple and performant zero dependency library that allows you to modify your object structure using references.
 
+### Tests
+
+| Statements                | Branches                | Functions                | Lines                |
+| ------------------------- | ----------------------- | ------------------------ | -------------------- |
+| ![Statements](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg) | ![Functions](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg) | ![Lines](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg) |
+
 ## Installation
 
 ``` shell
