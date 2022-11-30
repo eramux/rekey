@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "@babel/cli": "7.19.3",
-    "@babel/node": "7.20.2",
+    "@babel/node": "7.20.5",
     "@babel/preset-env": "7.20.2",
     "@commitlint/config-conventional": "9.1.2",
     "@types/jest": "26.0.24",
-    "@types/node": "14.18.33",
+    "@types/node": "14.18.34",
     "commitlint": "9.1.2",
     "esm": "3.2.25",
     "husky": "4.3.8",
@@ -45,7 +45,7 @@
     "ts-jest": "26.5.6",
     "ts-node": "9.1.1",
     "ts-node-dev": "1.1.8",
-    "typescript": "4.8.4",
-    "istanbul-badges-readme": "1.8.2"
+    "typescript": "4.9.3",
+    "istanbul-badges-readme": "1.8.4"
   }
 }
